@@ -9,14 +9,17 @@ class RecipeDetail extends StatefulWidget {
     required this.recipe,
   }) : super(key: key);
 
+  // @override
+  // _RecipeDetailState createState() {
+  //   return _RecipeDetailState();
+  // }
+
   @override
-  _RecipeDetailState createState() {
-    return _RecipeDetailState();
-  }
+  State<RecipeDetail> createState() => _RecipeDetailState();
 }
 
 class _RecipeDetailState extends State<RecipeDetail> {
-// TODO: Add _sliderVal here
+  int _sliderVal = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -34,18 +37,39 @@ class _RecipeDetailState extends State<RecipeDetail> {
                 image: AssetImage(widget.recipe.imageUrl),
               ),
             ),
-
             const SizedBox(
               height: 4,
             ),
-
             Text(
               widget.recipe.label,
               style: const TextStyle(fontSize: 18),
             ),
-            // TODO: Add Expanded
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.all(7.0),
+                itemCount: widget.recipe.ingredients.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final ingredient = widget.recipe.ingredients[index];
 
-            // TODO: Add Slider() here
+                  return Text(
+                      '${ingredient.quantity * _sliderVal} ${ingredient.measure} ${ingredient.name}');
+                },
+              ),
+            ),
+            Slider(
+              min: 1,
+              max: 10,
+              divisions: 10,
+              label: '${_sliderVal * widget.recipe.servings} servings',
+              value: _sliderVal.toDouble(),
+              onChanged: (newValue) {
+                setState(() {
+                  _sliderVal = newValue.round();
+                });
+              },
+              activeColor: Colors.green,
+              inactiveColor: Colors.black,
+            ),
           ],
         ),
       ),
