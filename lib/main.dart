@@ -3,7 +3,7 @@ import 'recipe.dart';
 import 'recipe_detail.dart';
 
 void main() {
-  runApp(RecipeApp());
+  runApp(const RecipeApp());
 }
 
 class RecipeApp extends StatelessWidget {
